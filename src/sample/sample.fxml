@@ -25,6 +25,11 @@
                     <Font name="Arial" size="18.0" />
                 </font>
             </Text>
+            <Text fx:id="username" layoutX="10" layoutY="30" stroke="black" text="Usuário">
+                <font>
+                    <Font name="Arial" size="14.0" />
+                </font>
+            </Text>
             <TextArea fx:id="chat" prefHeight="362.0" prefWidth="300.0"/>
         </VBox>
     </left>

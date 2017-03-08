@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.Optional;
@@ -29,6 +30,8 @@ public class Controller implements Initializable, UICallback{
     Button buttonSend;
     @FXML
     Button buttonRefreshOnline;
+    @FXML
+    Text username;
 
     Manager manager;
 
@@ -117,8 +120,10 @@ public class Controller implements Initializable, UICallback{
 
         result.ifPresent(usernamePassword -> {
             if(manager.createUser(username.getText())){
-                MessagingThread messagingThread = new MessagingThread(username.getText(),manager,this);
-                messagingThread.start();
+                MessagingThread t1 = new MessagingThread(username.getText(),manager,this);
+                t1.start();
+                manager.username = username.getText();
+                this.username.setText(manager.username);
             }
         });
     }
@@ -133,7 +138,7 @@ public class Controller implements Initializable, UICallback{
     @Override
     public void updateChat(String newMsg) {
         if (newMsg != null){
-            chat.appendText(">>" + newMsg + "\n");
+            chat.appendText(newMsg.split("-")[0] + ">>" + newMsg.split("-")[1] + "\n");
         }
     }
 }

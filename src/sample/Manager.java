@@ -11,6 +11,7 @@ import java.util.List;
 public class Manager {
     public JMSServices jmsservice;
     public UICallback callback;
+    public String username;
 
     public Manager(UICallback callback){
         this.callback = callback;
@@ -28,17 +29,19 @@ public class Manager {
     }
 
     public String getMessageFromQueue(String queueName){
-        return jmsservice.getMessageFromQueue(queueName);
+        if (queueName != null){
+            if (jmsservice.messagesInQueue(queueName) > 0){
+                return jmsservice.getMessageFromQueue(queueName);
+            }
+        }
+        return null;
     }
 
     public void putMessageInQueue(String queueName, String msg){
-        jmsservice.putMessageInQueue(queueName,msg);
+        jmsservice.putMessageInQueue(queueName,username + "-" + msg);
     }
 
     public List<String> listUsersOnline(){
         return jmsservice.listQueues();
-//        for(String queue:jmsservice.listQueues()){
-//
-//        }
     }
 }
